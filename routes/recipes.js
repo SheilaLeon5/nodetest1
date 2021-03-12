@@ -1,14 +1,16 @@
 var express = require('express');
-const { recipeById } = require('../controllers/recipesController');
 var recipesController = require('../controllers/recipesController');
+
 var router = express.Router();
 
 router.route('/')
-.get(recipesController.recipes);
+.get(recipesController.recipes)
+.post(recipesController.addRecipe)
   
 
 router.route('/:id')
-.get(recipesController.recipeById);
+.get(recipesController.recipeById)
+.put(recipesController.editRecipeById)
 
 
 

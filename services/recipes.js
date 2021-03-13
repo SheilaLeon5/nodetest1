@@ -17,6 +17,32 @@ async function getMultiple(page = 1){
   }
 }
 
+async function create(recipes){
+  const result = await db.query(
+    `INSERT INTO recetas 
+    (recipeID, title, ingredients, description, difficulty, person, time, typeFood) 
+    VALUES 
+    (?, ?, ?, ?, ?)`, 
+    [
+      recipes.recipeID, recipes.title,
+      recipes.ingredients, recipes.description,
+      recipes.difficulty, recipes.person,
+      recipes.time, recipes.typeFood,
+    ]
+  );
+
+  let message = 'Error in creating recipes';
+
+  if (result.affectedRows) {
+    message = 'Recipes created successfully';
+  }
+
+  return {message};
+}
+
+
+
 module.exports = {
-  getMultiple
+  getMultiple,
+  create
 }

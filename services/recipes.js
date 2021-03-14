@@ -22,12 +22,16 @@ async function create(recipes){
     `INSERT INTO recetas 
     (recipeID, title, ingredients, description, difficulty, person, time, typeFood) 
     VALUES 
-    (?, ?, ?, ?, ?)`, 
+    (?, ?, ?, ?, ?, ?, ?, ?)`, 
     [
-      recipes.recipeID, recipes.title,
-      recipes.ingredients, recipes.description,
-      recipes.difficulty, recipes.person,
-      recipes.time, recipes.typeFood,
+      recipes.recipeID, 
+      recipes.title,
+      recipes.ingredients,
+      recipes.description,
+      recipes.difficulty,
+      recipes.person,
+      recipes.time,
+      recipes.typeFood,
     ]
   );
 
@@ -41,8 +45,39 @@ async function create(recipes){
 }
 
 
+async function update(id, recipes){
+  const result = await db.query(
+    `UPDATE recipes 
+    SET recipeID=?, title=?, ingredients=?, 
+    description=?, difficulty=?,
+    person=?, time=?  , typeFood=?
+    WHERE id=?`, 
+    [
+      recipes.recipeID, 
+      recipes.title,
+      recipes.ingredients,
+      recipes.description,
+      recipes.difficulty,
+      recipes.person,
+      recipes.time,
+      recipes.typeFood,
+    ]
+  );
+
+  let message = 'Error in updating programming language';
+
+  if (result.affectedRows) {
+    message = 'Programming language updated successfully';
+  }
+
+  return {message};
+}
+
+
+
 
 module.exports = {
   getMultiple,
-  create
+  create,
+  update
 }

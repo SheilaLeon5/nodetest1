@@ -32,9 +32,9 @@ const recipes = require('../services/recipes');
 /* GET recipe. */
 router.get('/', async function(req, res, next) {
   try {
-    res.json(await recipes.getMultiple(req.query.page));
+    res.json(await recipes.getMultiple(req.query.page)); //directly access the parsed query string parameters
   } catch (err) {
-    console.error(`Error while getting programming languages `, err.message);
+    console.error(`Error while getting recipe `, err.message);
     next(err);
   }
 });
@@ -43,13 +43,23 @@ router.get('/', async function(req, res, next) {
 /* POST recipe*/
 router.post('/', async function(req, res, next) {
   try {
-    res.json(await recipes.create(req.body));
+    res.json(await recipes.create(req.body));  // this property contains key-value pairs of data submmited in the request body
   } catch (err) {
     console.error(`Error while creating recipe`, err.message);
     next(err);
   }
 });
 
+
+/* PUT recipe*/
+router.put('/:id', async function(req, res, next) {
+  try {
+    res.json(await recipes.update(req.params.id, req.body));
+  } catch (err) {
+    console.error(`Error while updating recipe`, err.message);
+    next(err);
+  }
+});
 
 
 module.exports = router;

@@ -40,6 +40,7 @@ router.get('/', async function(req, res, next) {
 });
 
 
+
 /* POST recipe*/
 router.post('/', async function(req, res, next) {
   try {
@@ -61,5 +62,15 @@ router.put('/:id', async function(req, res, next) {
   }
 });
 
+
+/* DELETE programming language */
+router.delete('/:id', async function(req, res, next) {
+  try {
+    res.json(await recipes.remove(req.params.id));
+  } catch (err) {
+    console.error(`Error while deleting recipe`, err.message);
+    next(err);
+  }
+});
 
 module.exports = router;
